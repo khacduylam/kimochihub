@@ -1,16 +1,18 @@
-var express 					= require('express');
-var app 					= express();
+var express 					= require("express");
+var app 						= express();
 var bodyParser 					= require("body-parser");
-var dotenv 					= require('dotenv').config();
+var dotenv 						= require("dotenv").config();
 var mongodb 					= process.env.local_DB || process.env.prod_DB;
-var mongoose 					= require('mongoose');
+var mongoose 					= require("mongoose");
 var session 					= require("express-session");
 var passport 					= require("passport");
 var LocalStrategy 				= require("passport-local");
 var methodOverride 				= require("method-override");
-var logger 					= require('morgan');
-var flash 					= require("connect-flash");
-var User 					= require("./models/user");
+var compression					= require("compression");
+var helmet 						= require("helmet");
+var logger 						= require("morgan");
+var flash 						= require("connect-flash");
+var User 						= require("./models/user");
 
 //Connect database;
 mongoose.connect(mongodb, {useNewUrlParser: true});
@@ -23,6 +25,8 @@ var userRouter = require("./routes/user");
 
 //Using middlewares
 app.use(logger('combined'));
+app.use(helmet());
+app.use(compression());
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
@@ -58,6 +62,6 @@ app.use("/kimochi", kimochiRouter);
 app.use("/kimochi/:id/comment", commentRouter);
 
 
-app.listen(process.env.PORT, process.env.IP, function(){
+app.listen(process.env.PORT, function(){
 	console.log("Server has started!");
 });
