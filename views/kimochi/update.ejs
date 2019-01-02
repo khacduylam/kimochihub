@@ -1,0 +1,13 @@
+<% include ../partials/header %>
+	<div class="container">
+		<h2 class="heading"><b>Update Kimochi</b></h2>
+		<form id="form-update" class="mx-auto" action="/kimochi/<%= kimochi._id %>/update?_method=PUT" method="POST" style="width: 40%">
+			<input class="form-control my-2" type="text" name="name" value="<%= kimochi.name %>" placeholder="Name">
+			<input class="form-control my-2" type="text" name="imageUrl" value="<%= kimochi.imageUrl %>" placeholder="Image URL">
+			<input class="form-control my-2" type="text" name="location" value="<%= kimochi.location %>" placeholder="Location">
+			<textarea class="mb-2 desc-form text-view" rows="10" maxlength="3500" name="description" placeholder="  Description"><%= kimochi.description %></textarea>
+			<input class="btn btn-primary btn-block" type="submit" name="submit" value="Update">
+			<a class="mx-auto" href="/kimochis">Go back</a>
+		</form>
+	</div>
+<% include ../partials/footer %>

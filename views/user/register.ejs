@@ -1,0 +1,51 @@
+<% include ../partials/header %>
+	<div class="container">
+		<h2 class="heading"><b>User Sign Up</b></h2>
+		<form id="form-register" class="mx-auto" action="/user/register" method="POST">
+			<input id="user" class="form-control my-2" type="text" name="username" title="*User name must be from 5 through 20 characters and not includes special characters." placeholder="User name" required>
+			<small id="user-message" class="text-danger"><i></i></small>
+			<input id="pass" class="form-control my-2" type="password" name="password" title="*Password must has atleast 5 characters." placeholder="Password" required>
+			<small id="pass-message" class="text-danger"><i></i></small>
+			<input id="pass-again" class="form-control my-2" type="password" name="passwordAgain" title="*Type password again." placeholder="Password again" required>
+			<small id="pass-again-message" class="text-danger"><i></i></small>
+			<input id="member-code" class="form-control my-2" type="text" name="code" title="*Member code to register account." placeholder="Member code" required>
+			<small><i>*Contact <a href="https://join.skype.com/invite/mfubkhWxPKdl" target="_blank">Khac Duy Lam</a> to receive member code.</i></small>
+			<input class="btn btn-primary btn-block" type="submit" name="submit" value="Sign up">
+			<a class="mx-auto" href="/kimochis">Go back</a>
+			<script type="text/javascript">
+				var user = $("#user");
+				var pass = $("#pass");
+				var passAgain = $("#pass-again");
+				var userMessage = $("#user-message");
+				var passMessage = $("#pass-message");
+				var passAgainMessage = $("#pass-again-message");
+				user.on("input", function(){
+					var pattern = /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+					if(user.val().length !== 0 && (user.val().length < 5 || user.val().length > 20 || pattern.test(user.val()))){
+						userMessage.text("*User name must be from 5 through 20 characters and not includes special characters.");
+					}
+					else{
+						userMessage.text("");
+					}
+				});
+				pass.on("input", function() {
+				    if(pass.val().length < 5 && pass.val().length !== 0){
+				    	passMessage.text("*Password must has atleast 5 characters.");
+				    } 
+				    else{
+				    	passMessage.text("");
+				    }
+				});
+				passAgain.on("input", function(){
+					if(pass.val() !== passAgain.val() && passAgain.val().length !== 0){
+						passAgainMessage.text("*Password is not matched.");
+					}
+					else{
+						passAgainMessage.text("");
+					}
+				});
+
+			</script>
+		</form>
+	</div>
+<% include ../partials/footer %>

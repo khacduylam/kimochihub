@@ -1,0 +1,165 @@
+.carousel-caption {
+	margin-bottom: 250px;
+}
+
+.navbar {
+	background-color: #ff9607;
+	color: #000;
+	font-weight: bold;
+}
+
+.jumbotron {
+	background-color: #000;
+}
+
+.jumbotron p {
+	color: #999999;
+}
+
+.jumbotron p a {
+	background-color: #ff9607;
+	color: #000;
+}
+
+#greeting {
+	color: #999999;
+}
+
+#first-half-logo {
+	background-color: #000;
+	color: #fff;
+}
+
+#second-half-logo {
+	background-color: #ff9607;
+	border-radius: 8px;
+}
+
+.heading {
+	text-align: center;
+	margin-top: 100px;
+}
+
+.navbar-brand{
+	background-color: #ff9607;
+	border-radius: 5px;
+	color: #000;
+}
+
+.btn-view {
+	background-color: #ff9607;
+	color: #000;
+}
+
+.btn-view:hover {
+	background-color: #000;
+	color: #ff9607;
+}
+
+#form-new {
+	width: 50%;
+}
+#form-update {
+	width: 50%;
+}
+
+#img-footer {
+	text-align: center;
+}
+
+#comment-field {
+	background-color: #f2f2f2;
+	border-bottom-left-radius: 15px;
+	border-top-right-radius: 15px;
+}
+
+.replies-field {
+	background-color: #a6a6a6;
+	border-bottom-left-radius: 15px;
+	border-top-right-radius: 15px;
+}
+
+#comment-input {
+	background-color: #fff;
+	border: 1px solid #1a1aff;
+	border-top-right-radius: 15px;
+	border-bottom-left-radius: 15px;
+	width: 70%;
+}
+
+.delete-btn {
+	display: inline;
+}
+
+#reply-content {
+	width: 100%;
+	overflow-x: auto;
+	overflow-y: auto;
+}
+
+.start-img {
+	height: 750px;
+}
+
+#form-login {
+	width: 40%;
+	margin-bottom: 40%;
+}
+
+#form-register {
+	width: 40%;
+	margin-bottom: 40%;
+}
+
+textarea {
+	white-space: pre-wrap;
+}
+
+.text-view {
+	white-space: pre-wrap;
+}
+
+.list-group-item {
+	overflow-x: auto;
+}
+
+#location {
+	width: 100%;
+	height: 400px;
+}
+
+#NavBar_MapTypeIcon {
+	display: none;
+}
+
+#NavBar_MapTypeText {
+	display: none;
+}
+
+#MapStyleSelector .NavBar_MapTypeButtonHeight {
+	display: none;
+}
+
+.desc-form {
+	width: 100%;
+	background-color: #fff;
+	border: 1px solid #cccccc;
+	border-radius: 5px;
+}
+
+footer {
+	background-color: #000;
+	height: 80px;
+	color: #f2f2f2;
+}
+
+footer li {
+	list-style-type: none;
+}
+
+footer a span {
+	background-color: #ff9607;
+	color: #000;
+	border-radius: 5px;
+}
+

@@ -1,0 +1,13 @@
+<% include ../partials/header %>
+	<div class="container">
+		<h2 class="heading"><b>Add New Kimochi</b></h2>
+		<form id="form-new" class="mx-auto" action="/kimochi/create" method="POST">
+			<input class="form-control my-2" type="text" name="name" placeholder="Name">
+			<input class="form-control my-2" type="text" name="imageUrl" placeholder="Image URL">
+			<input class="form-control my-2" type="text" name="location" placeholder="Location">
+			<textarea class="mb-2 desc-form text-view" rows="10" maxlength="3500" name="description" placeholder="  Description"></textarea>
+			<input class="btn btn-primary btn-block" type="submit" name="submit" value="Add">
+			<a class="mx-auto" href="/kimochis">Go back</a>
+		</form>
+	</div>
+<% include ../partials/footer %>

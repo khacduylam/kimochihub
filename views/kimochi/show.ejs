@@ -1,0 +1,232 @@
+<% include ../partials/header %>
+	<div class="container">
+		<div class="row mt-2">
+			<div class="col-md-3">
+				<p class="lead">INFORMATION</p>
+				<button class="btn btn-block btn-primary my-1" type="button" data-toggle="collapse" data-target="#info-view">Overview</button>
+				<div id="info-view" class="collapse">
+					<ul class="list-group">
+						<li class="list-group-item">Name: <strong><%= kimochi.name %></strong></li>
+						<li class="list-group-item">Image url: <a href="<%= kimochi.imageUrl %>" target="_blank"><i><%= kimochi.imageUrl %></i></a></li>
+						<li  class="list-group-item">Created by: <strong><%= kimochi.kimochi_author.username %></strong></li>
+						<li class="list-group-item">Created at: <small><%= kimochi.createdAt %></small></li>
+						<li class="list-group-item">Rates: 
+						<% for(let i=0; i<Math.round(kimochi.stars); i++){ %>
+							<i class="fas fa-star"></i>
+						<% } %>
+						<% if(Math.abs(kimochi.stars - Math.floor(kimochi.stars)) < 0.5 && Math.abs(kimochi.stars - Math.floor(kimochi.stars)) > 0){ %>
+							<i class="fas fa-star-half-alt"></i>
+						<% } %>
+						</li>
+						<li class="list-group-item">Comments: <strong><%= kimochi.comments.length %></strong></li>
+					</ul>
+				</div>
+				<button class="btn btn-block btn-primary my-1" type="button" data-toggle="collapse" data-target="#location-view">Location</button>
+				<div id="location-view">
+					<p><strong>Location: </strong><%= kimochi.location %></p>
+					<div id="location"></div>
+				</div>
+			</div>
+			<div id="main" class="col-md-9 container">
+				<div class="container img-thumbnail">
+					<div class="figure-caption">
+						<h3><strong><%= kimochi.name %></strong></h3>
+						<div class="container btn-group">
+						<% if(currentUser && kimochi.kimochi_author._id.equals(currentUser._id)){ %>
+							<a class="btn btn-primary btn-sm mr-2" title="Update" href="/kimochi/<%= kimochi._id %>/update"><i class="fas fa-edit"></i></a>
+							<!--<form action="/kimochi/<%= kimochi._id %>/delete?_method=DELETE" method="POST">
+								<input class="btn btn-danger btn-sm" title="Delete" type="submit" value="X">
+							</form>-->
+							<a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete-modal" title="Delete" href="#"><i class="far fa-trash-alt"></i></a>
+							<!-- delete modal -->
+							<div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="deleteModalCenterTitle" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered" role="document">
+								    <div class="modal-content">
+									    <div class="modal-header">
+									        <h5 class="modal-title" id="deleteModalCenterTitle">Are you sure?</h5>
+									        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									          <span aria-hidden="true">&times;</span>
+									        </button>
+									    </div>
+									    <div class="modal-footer">
+									        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+											<form action="/kimochi/<%= kimochi._id %>/delete?_method=DELETE" method="POST">
+												<input class="btn btn-danger" type="submit" name="submit" value="Delete">
+											</form>
+									    </div>
+								    </div>
+								</div>
+							</div>
+							<!-- end delete modal -->
+						<% } %>
+						<% if(currentUser){ %>
+							<button class="btn btn-success btn-sm ml-2" title="Rate" type="button" data-toggle="collapse" data-target="#rating-star"><i class="fas fa-star"></i></button>
+							<div id="rating-star" class="collapse mt-1 ml-2">
+								<i id="0" class="far fa-star star"></i>
+								<i id="1" class="far fa-star star"></i>
+								<i id="2" class="far fa-star star"></i>
+								<i id="3" class="far fa-star star"></i>
+								<i id="4" class="far fa-star star"></i>
+								<button id="rating-btn" class="btn btn-light btn-xs" title="Click to rate it up!" type="button"><i class="fas fa-greater-than"></i></button>
+							</div>
+						<% } %>	
+						</div>
+						<small><b><%= kimochi.createdAt %></b></small>
+						<% if(kimochi.description.length > 350){ %>
+							<p class="text-view"><%= kimochi.description.slice(0, 350) %><span id="desc-remain" class="collapse"><%= kimochi.description.slice(350) %></span>&nbsp;<a id="extension-btn" class="btn btn-light btn-sm" data-toggle="collapse" data-target="#desc-remain" href="#">See more</a></p>
+						<% } else{ %>
+							<p class="text-view"><%= kimochi.description %></p>
+						<% } %>	
+						<br>
+						<h5>
+							Posted by: <strong><%= kimochi.kimochi_author.username %></strong>
+							<span id="vote-stars" class="float-right">
+							<%var rater; if(currentUser){ rater = kimochi.raters.find(function(rater){ return rater._id.equals(currentUser._id)});} %>
+							<% if(currentUser && rater){ %>
+								<small>You rated: <%= rater.stars %>/5 stars</small>
+							<% } %>	
+							</span>
+						</h5>
+					</div>
+					<img class="img-thumbnail" src="<%= kimochi.imageUrl %>">
+				</div>
+				<div class="container">
+					<form class="my-2" action="/kimochi/<%= kimochi._id %>/comment/create" method="POST">
+						<div class="row">
+							<textarea id="comment-input" name="comment" placeholder=" Add new comment here..."></textarea>
+							<input id="btn-comment" class="btn btn-primary btn-lg ml-2 mt-2" type="submit" name="submit" value="comment">
+						</div>
+					</form>
+					<% kimochi.comments.forEach(function(comment){ %>
+					<!-- comment -->
+						<!-- comment-head -->
+						<h6>
+							<strong><%= comment.comment_author.username %></strong>
+							<span class="float-right mt-2"><small><%= comment.commentCreatedAt %></small></span>
+							<% if(currentUser){ %>
+							<!-- reply-btn -->
+							<button type="button" title="Reply" class="btn btn-light btn-sm" data-toggle="modal" data-target="#reply-modal-<%= comment._id %>">
+								<i class="fas fa-reply"></i>
+							</button>
+							<!-- end reply-btn -->
+
+							<!-- reply-modal -->
+							<div class="modal fade" id="reply-modal-<%= comment._id %>" tabindex="-1" role="dialog" aria-hidden="true">
+							    <div class="modal-dialog modal-dialog-centered" role="document">
+							        <div class="modal-content">
+							            <div class="modal-header">
+									        <h5 class="modal-title">Reply to <strong><%= comment.comment_author.username %></strong>&apos;s <i class="fas fa-reply"></i></h5>
+									        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									          <span aria-hidden="true">&times;</span>
+									        </button>
+							            </div>
+								        <div class="modal-body">
+								            <form action="/kimochi/<%= kimochi._id %>/comment/<%= comment._id %>/reply/create" method="POST">
+								          		<textarea id="reply-content" name="reply" rows="5" placeholder=" ..."></textarea>
+												<input class="btn btn-primary my-2 float-right" type="submit" name="submit" value="Reply">
+								            </form>
+								        </div>
+							        </div>
+							    </div>
+							</div>
+							<!-- end reply-modal -->
+							<% } %>	
+							<% if(currentUser && currentUser._id.equals(comment.comment_author._id)){ %>
+							<!-- edit-btn -->
+							<button type="button" title="Edit" class="btn btn-light btn-sm" data-toggle="modal" data-target="#edit-modal-<%= comment._id %>">
+								<i class="fas fa-edit"></i>
+							</button>
+							<!-- end edit-btn -->
+
+							<!-- edit-modal -->
+							<div class="modal fade" id="edit-modal-<%= comment._id %>" tabindex="-1" role="dialog" aria-hidden="true">
+							    <div class="modal-dialog modal-dialog-centered" role="document">
+							        <div class="modal-content">
+							            <div class="modal-header">
+									        <h5 class="modal-title">Edit <i class="fas fa-edit"></i></h5>
+									        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									          <span aria-hidden="true">&times;</span>
+									        </button>
+							            </div>
+								        <div class="modal-body">
+								            <form action="/kimochi/<%= kimochi._id %>/comment/<%= comment._id %>/update?_method=PUT" method="POST">
+								          		<textarea id="reply-content" name="comment_edit" rows="5" autocomplete="on"><%= comment.comment_text %></textarea>
+												<input class="btn btn-primary my-2 float-right" type="submit" name="submit" value="Update">
+								            </form>
+								        </div>
+							        </div>
+							    </div>
+							</div>
+							<!-- end edit-modal -->
+							<!-- delete-comment-btn -->
+							<form class="delete-btn" action="/kimochi/<%= kimochi._id %>/comment/<%= comment._id %>/delete?_method=DELETE" method="POST">
+								<input class="btn btn-light btn-sm" type="submit" name="submit" title="Delete" value="X">
+							</form>
+							<!-- end delete-comment-btn -->	
+							<% } %>
+						</h6>
+						<!-- end comment-head -->
+						<div id="comment-field" class="container">
+						<!-- comment-content -->
+							<p class="text-view"><%= comment.comment_text %></p>
+						<!-- end comment-content -->	
+
+							<!-- reply -->
+							<span>
+							<% comment.replies.forEach(function(reply){ %>
+								<h6>
+								<strong><%= reply.reply_author.username %></strong>
+								<span class="float-right"><small><%= reply.reply_time.toDateString() %></small></span>
+								<% if(currentUser && currentUser._id.equals(reply.reply_author._id)){ %>
+									<!-- edit-btn -->
+									<button type="button" title="Edit" class="btn btn-light btn-sm" data-toggle="modal" data-target="#edit-modal-<%= reply._id %>">
+										<i class="fas fa-edit"></i>
+									</button>
+									<!-- end edit-btn -->
+
+									<!-- edit-modal -->
+									<div class="modal fade" id="edit-modal-<%= reply._id %>" tabindex="-1" role="dialog" aria-hidden="true">
+									    <div class="modal-dialog modal-dialog-centered" role="document">
+									        <div class="modal-content">
+									            <div class="modal-header">
+											        <h5 class="modal-title">Edit <i class="fas fa-edit"></i></h5>
+											        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											          <span aria-hidden="true">&times;</span>
+											        </button>
+									            </div>
+										        <div class="modal-body">
+										            <form action="/kimochi/<%= kimochi._id %>/comment/<%= comment._id %>/reply/<%= reply._id %>/update?_method=PUT" method="POST">
+										          		<textarea id="reply-content" name="reply_edit" rows="5" autocomplete="on"><%= reply.reply_text %></textarea>
+														<input class="btn btn-primary my-2 float-right" type="submit" name="submit" value="Update">
+										            </form>
+										        </div>
+									        </div>
+									    </div>
+									</div>
+									<!-- end edit-modal -->
+									<!-- delete-comment-btn -->
+									<form class="delete-btn" action="/kimochi/<%= kimochi._id %>/comment/<%= comment._id %>/reply/<%= reply._id %>/delete?_method=DELETE" method="POST">
+										<input class="btn btn-light btn-sm" type="submit" name="submit" title="Delete" value="X">
+									</form>
+									<!-- end delete-comment-btn -->
+								</h6>		
+								<% } %>
+								<div class="container replies-field">
+									<p class="text-view"><%= reply.reply_text %></p>
+								</div>
+							<% }); %>
+							</span>
+							<!-- end reply -->
+						</div>
+					<!-- end comment -->
+						<hr>
+					<% }); %>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>var toggle=0;$("#extension-btn").on("click",function(){toggle||"See more"!==$(this).text()?($(this).text("See more"),toggle=0):($(this).text("Show less"),toggle=1)});</script>
+	<script type="text/javascript">function loadMapScenario(){var a=new Microsoft.Maps.Map(document.getElementById("location"),{center:new Microsoft.Maps.Location(47.624527,-122.355255),zoom:8});Microsoft.Maps.loadModule("Microsoft.Maps.Search",function(){var e=new Microsoft.Maps.Search.SearchManager(a),o={bounds:a.getBounds(),where:"<%= kimochi.location %>",callback:function(e,o){a.setView({bounds:e.results[0].bestView}),a.entities.push(new Microsoft.Maps.Pushpin(e.results[0].location))}};e.geocode(o)})}</script>
+	<script type="text/javascript">$("#rating-btn").on("click",function(){$.post("/kimochi/<%= kimochi._id %>/rate",{stars:$(".selected-star").length},function(t){$("#vote-stars").html(t)})});</script>
+	<script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?key=As4jqrkoyeQcRTOqIBiQgui2O7xH5QO_Xahh37r63HnpJLdPRNq3kqmYwmYnbZJQ&callback=loadMapScenario' async defer></script>
+<% include ../partials/footer %>

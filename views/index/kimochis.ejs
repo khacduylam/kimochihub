@@ -1,0 +1,31 @@
+<% include ../partials/header %>
+	<div class="container mt-3">
+		<header class="jumbotron">
+			<h1 class="display-4"><span id="greeting">Welcome To </span><span id="first-half-logo">Kimöchi</span>&nbsp;<span id="second-half-logo">&nbsp;Hub&nbsp;</span></h1>
+			<p>View kimöchis from all over the world.</p>
+			<p><a class="btn" href="/kimochi/create">Add a new Kimochi</a></p>
+		</header>
+		<div class="row">
+			<div class="col-md-12">
+				<h3>Our Most Popular Kimochis!</h3>
+			</div>
+		</div>
+		<div class="row">
+			<% kimochis.forEach(function(kimochi) { %>
+				<div class="col-lg-4 col-md-6 col-sm-12 my-2">
+					<div class="img-thumbnail">
+						<img src= "<%= kimochi.imageUrl %>" width="100%" height="200px">
+						<div id="img-footer" class="caption container">
+							<% if(kimochi.name.length > 34){ %>
+							<h4><%= kimochi.name.slice(0, 30) %>...</h4>	
+							<% } else{ %>
+							<h4><%= kimochi.name %></h4>
+							<% } %>	
+							<a class="btn btn-view" href="/kimochi/<%= kimochi._id %>/details">view more</a>
+						</div>
+					</div>
+				</div>
+			<% }); %>
+		</div>		
+	</div>
+<% include ../partials/footer %>
