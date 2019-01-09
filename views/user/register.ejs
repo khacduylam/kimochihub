@@ -12,40 +12,7 @@
 			<small><i>*Contact <a href="https://join.skype.com/invite/mfubkhWxPKdl" target="_blank">Khac Duy Lam</a> to receive member code.</i></small>
 			<input class="btn btn-primary btn-block" type="submit" name="submit" value="Sign up">
 			<a class="mx-auto" href="/kimochis">Go back</a>
-			<script type="text/javascript">
-				var user = $("#user");
-				var pass = $("#pass");
-				var passAgain = $("#pass-again");
-				var userMessage = $("#user-message");
-				var passMessage = $("#pass-message");
-				var passAgainMessage = $("#pass-again-message");
-				user.on("input", function(){
-					var pattern = /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
-					if(user.val().length !== 0 && (user.val().length < 5 || user.val().length > 20 || pattern.test(user.val()))){
-						userMessage.text("*User name must be from 5 through 20 characters and not includes special characters.");
-					}
-					else{
-						userMessage.text("");
-					}
-				});
-				pass.on("input", function() {
-				    if(pass.val().length < 5 && pass.val().length !== 0){
-				    	passMessage.text("*Password must has atleast 5 characters.");
-				    } 
-				    else{
-				    	passMessage.text("");
-				    }
-				});
-				passAgain.on("input", function(){
-					if(pass.val() !== passAgain.val() && passAgain.val().length !== 0){
-						passAgainMessage.text("*Password is not matched.");
-					}
-					else{
-						passAgainMessage.text("");
-					}
-				});
-
-			</script>
 		</form>
 	</div>
+	<script type="text/javascript">var user=$("#user"),pass=$("#pass"),passAgain=$("#pass-again"),userMessage=$("#user-message"),passMessage=$("#pass-message"),passAgainMessage=$("#pass-again-message");user.on("input",function(){0!==user.val().length&&(user.val().length<5||20<user.val().length||/[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(user.val()))?userMessage.text("*User name must be from 5 through 20 characters and not includes special characters."):userMessage.text("")}),pass.on("input",function(){pass.val().length<5&&0!==pass.val().length?passMessage.text("*Password must has atleast 5 characters."):passMessage.text("")}),passAgain.on("input",function(){pass.val()!==passAgain.val()&&0!==passAgain.val().length?passAgainMessage.text("*Password is not matched."):passAgainMessage.text("")}),$(function(){$(window).width()&&$(window).width()<=768?$("#form-register").css("width","65%"):$("#form-register").css("width","40%")}),$(window).on("resize",function(){$(window).width()&&992<$(window).width()&&$("#form-register").css("width","40%"),$(window).width()&&768<$(window).width()&&$(window).width()<=992&&$("#form-register").css("width","50%"),$(window).width()&&576<$(window).width()&&$(window).width()<=768&&$("#form-register").css("width","65%"),$(window).width()&&$(window).width()<576&&$("#form-register").css("width","70%")});</script>
 <% include ../partials/footer %>

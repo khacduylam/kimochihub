@@ -81,6 +81,10 @@ var middleware = {
 				res.redirect("back");
 			});
 		}
+	},
+
+	escapeRegex: function(text) {
+	    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 	}
 }
 

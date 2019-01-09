@@ -1,0 +1,21 @@
+			<% kimochis.forEach(function(kimochi) { %>
+				<div id="<%= kimochi._id %>" class="col-lg-4 col-md-6 col-sm-12 my-2 kimochi">
+					<div class="img-thumbnail">
+						<img src= "<%= kimochi.imageUrl %>" width="100%" height="250px" alt="Kimochi image.">
+						<div id="img-footer" class="caption container">
+							<% if(kimochi.name.length > 34){ %>
+							<h4><%= kimochi.name.slice(0, 30) %>...</h4>	
+							<% } else{ %>
+							<h4><%= kimochi.name %></h4>
+							<% } %>
+							<% for(let i=0; i<Math.round(kimochi.stars); i++){ %>
+							<i class="fas fa-star"></i>
+							<% } %>
+							<% if(Math.abs(kimochi.stars - Math.floor(kimochi.stars)) < 0.5 && Math.abs(kimochi.stars - Math.floor(kimochi.stars)) > 0){ %>
+								<i class="fas fa-star-half-alt"></i>
+							<% } %><br>	
+							<a class="btn btn-view" href="/kimochi/<%= kimochi._id %>/details">view more</a>
+						</div>
+					</div>
+				</div>
+			<% }); %>		

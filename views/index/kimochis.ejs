@@ -1,31 +1,38 @@
 <% include ../partials/header %>
 	<div class="container mt-3">
 		<header class="jumbotron">
-			<h1 class="display-4"><span id="greeting">Welcome To </span><span id="first-half-logo">Kimöchi</span>&nbsp;<span id="second-half-logo">&nbsp;Hub&nbsp;</span></h1>
-			<p>View kimöchis from all over the world.</p>
-			<p><a class="btn" href="/kimochi/create">Add a new Kimochi</a></p>
+			<h1 class="display-4"><span id="greeting">Welcome To </span><span id="first-half-logo" class="ani-fade-in-remove">Kimöchi</span>&nbsp;<span id="second-half-logo" class="ani-slide-left-remove">&nbsp;Hub&nbsp;</span></h1>
+			<p id="slogan" class="ani-fade-in-remove">View kimöchis from all over the world.</p>
+			<p><a id="add-btn" class="btn ani-slide-up-remove" href="/kimochi/create">Add a new Kimöchi</a></p>
 		</header>
 		<div class="row">
-			<div class="col-md-12">
-				<h3>Our Most Popular Kimochis!</h3>
+			<div class="col-12">
+				<div class="row">
+					<h3 id="" class="col-lg-8 col-md-12">Our Newest Kimöchis Here!</h3>
+	                <form id="search-form" class=" form-inline col-lg-4 col-md-12 mb-md-2" action="/kimochis/search" method="GET">
+	                	<input id="search-input" class="form-control" type="text" name="name" placeholder="Kimöchi name...">
+	                	<input id="search-btn" class="btn ml-sm-2 my-1" type="submit" name="submit" value="Search">
+	                </form>
+	                <div class="container">
+	                	<form action="/kimochis/filter" method="GET">
+		                	<select id="sort" class="bg-light" name="sort">
+		                		<option value="" selected>Filter by</option>
+		                		<option value="newest">Newest first</option>
+		                		<option value="oldest">Oldest first</option>
+		                		<option value="rating">High rating</option>
+		                	</select>
+		                	<button id="filter-btn" class="btn btn-sm" type="button"><i class="fas fa-filter"></i></button>
+		                </form>
+	                </div>
+				</div>
 			</div>
 		</div>
-		<div class="row">
-			<% kimochis.forEach(function(kimochi) { %>
-				<div class="col-lg-4 col-md-6 col-sm-12 my-2">
-					<div class="img-thumbnail">
-						<img src= "<%= kimochi.imageUrl %>" width="100%" height="200px">
-						<div id="img-footer" class="caption container">
-							<% if(kimochi.name.length > 34){ %>
-							<h4><%= kimochi.name.slice(0, 30) %>...</h4>	
-							<% } else{ %>
-							<h4><%= kimochi.name %></h4>
-							<% } %>	
-							<a class="btn btn-view" href="/kimochi/<%= kimochi._id %>/details">view more</a>
-						</div>
-					</div>
-				</div>
-			<% }); %>
-		</div>		
+		<div id="main" class="row">
+			<% include ../partials/kimochis %>
+		</div>
+		<div id="more" class="row">
+			<button id="more-btn" class="btn btn-primary" type="button">SHOW MORE</button>
+		</div>
 	</div>
+	<script type="text/javascript">$("#search-btn").on("click",function(){localStorage.setItem("inputText",$("#search-input").val())}),$(function(){$("#search-input").val(localStorage.getItem("inputText")),localStorage.getItem("inputText")&&($(".ani-fade-in-remove").removeClass("ani-fade-in-remove"),$(".ani-slide-left-remove").removeClass("ani-slide-left-remove"),$(".ani-slide-up-remove").removeClass("ani-slide-up-remove"))});</script>
 <% include ../partials/footer %>

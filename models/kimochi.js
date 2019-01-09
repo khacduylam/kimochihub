@@ -38,7 +38,7 @@ kimochiSchema
 	this.raters.forEach(function(rater){
 		total += rater.stars;
 	});
-	return total / this.raters.length;
+	return this.raters.length ? total / this.raters.length:0;
 });
 
 module.exports = mongoose.model('Kimochi', kimochiSchema);

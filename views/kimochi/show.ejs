@@ -34,9 +34,6 @@
 						<div class="container btn-group">
 						<% if(currentUser && kimochi.kimochi_author._id.equals(currentUser._id)){ %>
 							<a class="btn btn-primary btn-sm mr-2" title="Update" href="/kimochi/<%= kimochi._id %>/update"><i class="fas fa-edit"></i></a>
-							<!--<form action="/kimochi/<%= kimochi._id %>/delete?_method=DELETE" method="POST">
-								<input class="btn btn-danger btn-sm" title="Delete" type="submit" value="X">
-							</form>-->
 							<a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete-modal" title="Delete" href="#"><i class="far fa-trash-alt"></i></a>
 							<!-- delete modal -->
 							<div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="deleteModalCenterTitle" aria-hidden="true">
@@ -88,13 +85,15 @@
 							</span>
 						</h5>
 					</div>
-					<img class="img-thumbnail" src="<%= kimochi.imageUrl %>">
+					<img class="img-thumbnail" src="<%= kimochi.imageUrl %>" alt="Kimochi image.">
 				</div>
-				<div class="container">
+				<div class="container"><hr>
 					<form class="my-2" action="/kimochi/<%= kimochi._id %>/comment/create" method="POST">
-						<div class="row">
-							<textarea id="comment-input" name="comment" placeholder=" Add new comment here..."></textarea>
-							<input id="btn-comment" class="btn btn-primary btn-lg ml-2 mt-2" type="submit" name="submit" value="comment">
+						<div id="comment-input-area" class="row">
+							<div class="emoji-picker-container col-10">
+								<textarea id="comment-input" class="" name="comment" placeholder=" Write a comment here..." data-emojiable="true"></textarea>
+							</div>
+							<button id="comment-btn" class="btn col-2" type="submit" name="submit" value="comment"><i class="fas fa-comments fa-2x"></i></button>
 						</div>
 					</form>
 					<% kimochi.comments.forEach(function(comment){ %>
@@ -121,10 +120,12 @@
 									        </button>
 							            </div>
 								        <div class="modal-body">
-								            <form action="/kimochi/<%= kimochi._id %>/comment/<%= comment._id %>/reply/create" method="POST">
-								          		<textarea id="reply-content" name="reply" rows="5" placeholder=" ..."></textarea>
-												<input class="btn btn-primary my-2 float-right" type="submit" name="submit" value="Reply">
-								            </form>
+								            <div class="emoji-picker-container">
+								            	<form id="reply-form" action="/kimochi/<%= kimochi._id %>/comment/<%= comment._id %>/reply/create" method="POST">
+									          		<textarea id="reply-content" class="text-view" name="reply" placeholder=" ..." data-emojiable="true"></textarea>
+													<input class="btn btn-primary my-2 float-right" type="submit" name="submit" value="Reply">
+									            </form>
+								            </div>
 								        </div>
 							        </div>
 							    </div>
@@ -149,10 +150,12 @@
 									        </button>
 							            </div>
 								        <div class="modal-body">
-								            <form action="/kimochi/<%= kimochi._id %>/comment/<%= comment._id %>/update?_method=PUT" method="POST">
-								          		<textarea id="reply-content" name="comment_edit" rows="5" autocomplete="on"><%= comment.comment_text %></textarea>
-												<input class="btn btn-primary my-2 float-right" type="submit" name="submit" value="Update">
-								            </form>
+									        <div class="emoji-picker-container">
+									        	<form id="update-comment-form" action="/kimochi/<%= kimochi._id %>/comment/<%= comment._id %>/update?_method=PUT" method="POST"> 	
+									          		<textarea id="update-comment-content" class="text-view" name="comment_edit" data-emojiable="true"><%= comment.comment_text %></textarea>
+													<input class="btn btn-primary my-2 float-right" type="submit" name="submit" value="Update">
+									            </form>
+									        </div>							                
 								        </div>
 							        </div>
 							    </div>
@@ -166,9 +169,9 @@
 							<% } %>
 						</h6>
 						<!-- end comment-head -->
-						<div id="comment-field" class="container">
+						<div id="comment-view-area" class="container">
 						<!-- comment-content -->
-							<p class="text-view"><%= comment.comment_text %></p>
+							<p class="text text-view"><%= comment.comment_text %></p>
 						<!-- end comment-content -->	
 
 							<!-- reply -->
@@ -195,10 +198,12 @@
 											        </button>
 									            </div>
 										        <div class="modal-body">
-										            <form action="/kimochi/<%= kimochi._id %>/comment/<%= comment._id %>/reply/<%= reply._id %>/update?_method=PUT" method="POST">
-										          		<textarea id="reply-content" name="reply_edit" rows="5" autocomplete="on"><%= reply.reply_text %></textarea>
-														<input class="btn btn-primary my-2 float-right" type="submit" name="submit" value="Update">
-										            </form>
+										            <div class="emoji-picker-container">
+										            	<form id="update-reply-form" action="/kimochi/<%= kimochi._id %>/comment/<%= comment._id %>/reply/<%= reply._id %>/update?_method=PUT" method="POST">
+											          		<textarea id="update-reply-content" class="text-view" name="reply_edit" data-emojiable="true"><%= reply.reply_text %></textarea>
+															<input class="btn btn-primary my-2 float-right" type="submit" name="submit" value="Update">
+											            </form>
+										            </div>
 										        </div>
 									        </div>
 									    </div>
@@ -211,8 +216,8 @@
 									<!-- end delete-comment-btn -->
 								</h6>		
 								<% } %>
-								<div class="container replies-field">
-									<p class="text-view"><%= reply.reply_text %></p>
+								<div class="container replies-view-area">
+									<p class="text text-view"><%= reply.reply_text %></p>
 								</div>
 							<% }); %>
 							</span>
@@ -225,6 +230,11 @@
 			</div>
 		</div>
 	</div>
+	<script src="/emoji-lib/js/config.js"></script>
+    <script src="/emoji-lib/js/util.js"></script>
+    <script src="/emoji-lib/js/jquery.emojiarea.js"></script>
+    <script src="/emoji-lib/js/emoji-picker.js"></script>
+	<script>$(function(){window.emojiPicker=new EmojiPicker({emojiable_selector:"[data-emojiable=true]",assetsPath:"/emoji-lib/img/",popupButtonClasses:"fas fa-smile-wink"}),window.emojiPicker.discover()});</script>
 	<script>var toggle=0;$("#extension-btn").on("click",function(){toggle||"See more"!==$(this).text()?($(this).text("See more"),toggle=0):($(this).text("Show less"),toggle=1)});</script>
 	<script type="text/javascript">function loadMapScenario(){var a=new Microsoft.Maps.Map(document.getElementById("location"),{center:new Microsoft.Maps.Location(47.624527,-122.355255),zoom:8});Microsoft.Maps.loadModule("Microsoft.Maps.Search",function(){var e=new Microsoft.Maps.Search.SearchManager(a),o={bounds:a.getBounds(),where:"<%= kimochi.location %>",callback:function(e,o){a.setView({bounds:e.results[0].bestView}),a.entities.push(new Microsoft.Maps.Pushpin(e.results[0].location))}};e.geocode(o)})}</script>
 	<script type="text/javascript">$("#rating-btn").on("click",function(){$.post("/kimochi/<%= kimochi._id %>/rate",{stars:$(".selected-star").length},function(t){$("#vote-stars").html(t)})});</script>

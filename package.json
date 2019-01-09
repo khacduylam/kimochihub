@@ -1,6 +1,6 @@
 {
   "name": "kimochihub",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "web for man",
   "main": "app.js",
   "scripts": {

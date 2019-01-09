@@ -1,18 +1,18 @@
-var express 					= require("express");
-var app 						= express();
-var bodyParser 					= require("body-parser");
-var dotenv 						= require("dotenv").config();
-var mongodb 					= process.env.local_DB || process.env.prod_DB;
-var mongoose 					= require("mongoose");
-var session 					= require("express-session");
-var passport 					= require("passport");
-var LocalStrategy 				= require("passport-local");
-var methodOverride 				= require("method-override");
-var compression					= require("compression");
-var helmet 						= require("helmet");
-var logger 						= require("morgan");
-var flash 						= require("connect-flash");
-var User 						= require("./models/user");
+var express                     = require("express");
+var app                         = express();
+var bodyParser                  = require("body-parser");
+var dotenv                      = require("dotenv").config();
+var mongodb                     = process.env.local_DB || process.env.prod_DB;
+var mongoose                    = require("mongoose");
+var session                     = require("express-session");
+var passport                    = require("passport");
+var LocalStrategy               = require("passport-local");
+var methodOverride              = require("method-override");
+var compression                 = require("compression");
+var helmet                      = require("helmet");
+var logger                      = require("morgan");
+var flash                       = require("connect-flash");
+var User                        = require("./models/user");
 
 //Connect database;
 mongoose.connect(mongodb, {useNewUrlParser: true});
@@ -24,7 +24,7 @@ var commentRouter = require("./routes/comment");
 var userRouter = require("./routes/user");
 
 //Using middlewares
-app.use(logger('combined'));
+// app.use(logger('combined'));
 app.use(helmet());
 app.use(compression());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -60,6 +60,16 @@ app.use("/", indexRouter);
 app.use("/user", userRouter);
 app.use("/kimochi", kimochiRouter);
 app.use("/kimochi/:id/comment", commentRouter);
+
+app.get("/abcd", function(req, res){
+	res.render("error", {errorMessage: "something went wrong!"});
+});
+
+//TEST
+app.get("/abc", function(req, res){
+	console.log(req. query.age);
+	res.json(req.query);
+});
 
 
 app.listen(process.env.PORT, function(){

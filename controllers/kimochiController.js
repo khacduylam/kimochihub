@@ -6,10 +6,9 @@ exports.kimochi_show_get = function(req, res){
 	// console.log("kimochi_show_get");
 	Kimochi.findById(req.params.id)
 	.populate("comments").exec(function(err, kimochi){
-		if(err){
+		if(err || kimochi === null){
 			console.log("kimochi_show_get: " + err);
-			req.flash("message", "Oop... something went wrong!");
-			res.redirect("/kimochis");
+			res.render("error", {errorMessage: "This post has been removed before!"});
 		}
 		else{
 			res.render("kimochi/show", {kimochi: kimochi});

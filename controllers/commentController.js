@@ -42,7 +42,7 @@ exports.comment_create_post = function(req, res){
 			res.redirect("back");
 		}
 	});
-}
+};
 
 exports.comment_update_put = function(req, res){
 	// console.log("comment_update_put");
@@ -140,18 +140,14 @@ exports.reply_update_put = function(req, res){
 		}
 		else{
 			let index = comment.replies.findIndex(function(reply){
-				console.log(reply._id);
-				console.log(req.params.reply_id);
 				return reply._id.equals(req.params.reply_id);
 			});
 			if(index === -1){
-				console.log(index);
 				req.flash("message", ":( something went wrong!");
 				res.redirect("back");
 			}
 			else{
 				comment.replies[index].reply_text = req.body.reply_edit;
-				console.log(comment);
 				comment.save();
 				res.redirect("back");
 			}
@@ -169,18 +165,14 @@ exports.reply_remove_delete = function(req, res){
 		}
 		else{
 			let index = comment.replies.findIndex(function(reply){
-				console.log(reply._id);
-				console.log(req.params.reply_id);
 				return reply._id.equals(req.params.reply_id);
 			});
 			if(index === -1){
-				console.log(index);
 				req.flash("message", ":( something went wrong!");
 				res.redirect("back");
 			}
 			else{
 				comment.replies.splice(index, 1);
-				console.log(comment);
 				comment.save();
 				res.redirect("back");
 			}

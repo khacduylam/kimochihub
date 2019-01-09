@@ -8,6 +8,19 @@
 	font-weight: bold;
 }
 
+#home-btn {
+	background-color: #000;
+	color: #ff9607;
+	border-radius: 5px;
+	box-shadow: 2px 2px 3px #00004d;
+	text-shadow: 1px 1px 2px #ff0000;
+}
+
+#home-btn:hover {
+	background-color: #fff977;
+	color: #000;
+}
+
 .jumbotron {
 	background-color: #000;
 }
@@ -33,6 +46,11 @@
 #second-half-logo {
 	background-color: #ff9607;
 	border-radius: 8px;
+}
+
+#search-btn {
+	background-color: #000;
+	color: #ff9607;
 }
 
 .heading {
@@ -67,24 +85,63 @@
 	text-align: center;
 }
 
-#comment-field {
-	background-color: #f2f2f2;
+#comment-view-area {
+	background-color: #fff;
 	border-bottom-left-radius: 15px;
 	border-top-right-radius: 15px;
 }
 
-.replies-field {
-	background-color: #a6a6a6;
+.replies-view-area {
+	background-color: #fff;
 	border-bottom-left-radius: 15px;
 	border-top-right-radius: 15px;
+}
+
+.text {
+	background-color: #f2f2f2;
+	border-radius: 20px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+#comment-input-area {
+	background-color: #f2f2f2;
+	border: 1px solid #d9d9d9;
+	border-radius: 20px;
 }
 
 #comment-input {
-	background-color: #fff;
-	border: 1px solid #1a1aff;
-	border-top-right-radius: 15px;
-	border-bottom-left-radius: 15px;
-	width: 70%;
+	background-color: #f2f2f2;
+	border: none;
+	border-top-left-radius: 20px;
+	border-bottom-left-radius: 20px;
+	border-right: none;
+	width: 100%;
+	min-height: 50px;
+	max-height: 70px;
+	height: 50px;
+}
+
+#comment-btn {
+	border-left: 1px solid #fff;
+	background: transparent;
+	color: #0069d9;
+}
+
+.emoji-picker-container {
+	height: 100%;
+}
+
+.emoji-wysiwyg-editor {
+	background: transparent;
+	margin-right: -15px;
+	height: 100%;
+}
+
+.emoji-picker-icon {
+	position: absolute;
+	top: 8px;
+	right: 8px;
 }
 
 .delete-btn {
@@ -92,9 +149,48 @@
 }
 
 #reply-content {
-	width: 100%;
+	width: 95%;
+	height: 80px;
+	padding-right: 10px;
 	overflow-x: auto;
 	overflow-y: auto;
+}
+
+#update-reply-content {
+	width: 95%;
+	height: 80px;
+	padding-right: 10px;
+	overflow-x: auto;
+	overflow-y: auto;
+}
+
+#update-comment-content {
+	width: 95%;
+	height: 80px;
+	padding-right: 10px;
+	overflow-x: auto;
+	overflow-y: auto;
+}
+
+#update-comment-form .emoji-wysiwyg-editor {
+	background-color: #f2f2f2;
+	padding-left: 3px;
+	border-radius: 5px;
+	width: 85%;
+}
+
+#reply-form .emoji-wysiwyg-editor {
+	background-color: #f2f2f2;
+	padding-left: 3px;
+	border-radius: 5px;
+	width: 85%;
+}
+
+#update-reply-form .emoji-wysiwyg-editor {
+	background-color: #f2f2f2;
+	padding-left: 3px;
+	border-radius: 5px;
+	width: 85%;
 }
 
 .start-img {
@@ -117,6 +213,7 @@ textarea {
 
 .text-view {
 	white-space: pre-wrap;
+	overflow-x: auto;
 }
 
 .list-group-item {
@@ -147,6 +244,10 @@ textarea {
 	border-radius: 5px;
 }
 
+#more-btn {
+	margin: 0px auto;
+}
+
 footer {
 	background-color: #000;
 	height: 80px;
@@ -161,5 +262,65 @@ footer a span {
 	background-color: #ff9607;
 	color: #000;
 	border-radius: 5px;
+}
+
+.ani-fade-in-remove {
+	animation-duration: 1s;
+	animation-name: fadeIn;
+}
+
+.ani-slide-left-remove {
+	animation-duration: 1s;
+	animation-name: slideLeft;
+}
+
+.kimochi {
+	animation-duration: 1s;
+	animation-name: animateKimochis;
+}
+
+.ani-slide-up-remove {
+	animation-duration: 1s;
+	animation-name: slideUp;
+}
+
+@keyframes animateKimochis {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		font-size: 2em;
+	}
+	to {
+		opacity: 1;
+		font-size: 1em;
+	}
+}
+
+@keyframes slideLeft {
+	from {
+		margin-left: 10%;
+	}
+	to {
+		margin-left: 0%;
+	}
+}
+
+@keyframes slideUp {
+	from {
+		margin-top: 5%;
+		margin-bottom: -5%;
+	}
+	to {
+		margin-top: 0%;
+		margin-bottom: 0%;
+	}
 }
 
