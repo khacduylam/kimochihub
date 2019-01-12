@@ -61,16 +61,6 @@ app.use("/user", userRouter);
 app.use("/kimochi", kimochiRouter);
 app.use("/kimochi/:id/comment", commentRouter);
 
-app.get("/abcd", function(req, res){
-	res.render("error", {errorMessage: "something went wrong!"});
-});
-
-//TEST
-app.get("/abc", function(req, res){
-	console.log(req. query.age);
-	res.json(req.query);
-});
-
 
 app.listen(process.env.PORT, function(){
 	console.log("Server has started!");
